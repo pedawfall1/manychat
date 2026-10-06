@@ -55,8 +55,14 @@ async function call<T>(
   }
 
   if (!res.ok) {
-    const err = (json as { error?: { message?: string; code?: number } }).error;
-    throw new MetaError(err?.message ?? `Graph API respondeu ${res.status}`, res.status, json);
+    const err = (json as { error?: { message?: string; code?: number; fbtrace_id?: string } }).error;
+    // O fbtrace_id e o que o suporte da Meta pede pra investigar uma falha.
+    const trace = err?.fbtrace_id ? ` [fbtrace_id: ${err.fbtrace_id}]` : "";
+    throw new MetaError(
+      `${err?.message ?? `Graph API respondeu ${res.status}`}${trace}`,
+      res.status,
+      json,
+    );
   }
   return json as T;
 }
