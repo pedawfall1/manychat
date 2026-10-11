@@ -8,8 +8,7 @@ import {
   FlaskConical,
   HelpCircle,
   Inbox,
-  LayoutDashboard,
-  LayoutGrid,
+  LayoutDashboard,
   LogOut,
   MessageSquareShare,
   Settings,
@@ -36,7 +35,6 @@ const NAV = [
     group: "Conteúdo",
     items: [
       { href: "/reels", label: "Reels", icon: Clapperboard },
-      { href: "/carrossel", label: "Carrosséis", icon: LayoutGrid },
       { href: "/duvidas", label: "Dúvidas", icon: HelpCircle },
     ],
   },

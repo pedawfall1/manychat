@@ -3,7 +3,6 @@ import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 import { z } from "zod";
-import { pickProvider } from "./providers";
 
 export const ThemesSchema = z.object({
   themes: z.array(
@@ -15,6 +14,14 @@ export const ThemesSchema = z.object({
     }),
   ),
 });
+
+/** AI_PROVIDER manda; sem ele, usa a chave que existir. */
+function pickProvider(): "openai" | "anthropic" {
+  const forced = process.env.AI_PROVIDER?.toLowerCase();
+  if (forced === "openai" || forced === "anthropic") return forced;
+  if (process.env.OPENAI_API_KEY) return "openai";
+  return "anthropic";
+}
 
 export type MinedThemes = z.infer<typeof ThemesSchema>;
 
@@ -30,7 +37,7 @@ REGRAS
 3. "quantas" é a contagem real de comentários naquele tema. Não invente.
 4. Em "exemplos", cite no máximo 3 comentários literais, sem alterar o texto.
 5. "sugestao_de_post" é UMA frase: o post que responderia esse tema, específico
-   o bastante para virar carrossel. Nada de "fale sobre preços".
+   o bastante para virar post. Nada de "fale sobre preços".
 6. No máximo 6 temas, do mais frequente para o menos.
 7. Se não houver pergunta nenhuma nos comentários, devolva a lista vazia.
 

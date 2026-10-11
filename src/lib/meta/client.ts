@@ -281,51 +281,6 @@ export async function listMedia(limit = 25): Promise<IgMedia[]> {
   return res.data ?? [];
 }
 
-// --- Publicacao --------------------------------------------------------------
-
-/**
- * Publicar carrossel sao tres etapas: um container por imagem, um container do
- * carrossel apontando para eles, e so entao o publish. As imagens precisam
- * estar em URLs publicas — o Instagram e quem baixa.
- */
-export async function createCarouselItem(imageUrl: string): Promise<string> {
-  const res = await call<{ id: string }>(`${selfId()}/media`, {
-    method: "POST",
-    query: { image_url: imageUrl, is_carousel_item: "true" },
-  });
-  return res.id;
-}
-
-export async function createCarouselContainer(
-  childrenIds: string[],
-  caption: string,
-): Promise<string> {
-  const res = await call<{ id: string }>(`${selfId()}/media`, {
-    method: "POST",
-    query: {
-      media_type: "CAROUSEL",
-      children: childrenIds.join(","),
-      caption,
-    },
-  });
-  return res.id;
-}
-
-export async function getContainerStatus(containerId: string) {
-  return call<{ status_code?: string; status?: string }>(containerId, {
-    query: { fields: "status_code,status" },
-  });
-}
-
-/** Passo irreversivel: a partir daqui o post esta no ar. */
-export async function publishContainer(creationId: string): Promise<string> {
-  const res = await call<{ id: string }>(`${selfId()}/media_publish`, {
-    method: "POST",
-    query: { creation_id: creationId },
-  });
-  return res.id;
-}
-
 // --- Diagnostico do token --------------------------------------------------
 
 export type TokenStatus = {

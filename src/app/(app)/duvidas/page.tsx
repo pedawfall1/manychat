@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Lightbulb, Loader2, MessagesSquare, Search } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { fetchJson } from "@/lib/fetchJson";
@@ -177,12 +176,6 @@ export default function DuvidasPage() {
                         <Lightbulb size={14} className="mt-0.5 shrink-0 text-[var(--accent)]" />
                         <div className="min-w-0 flex-1">
                           <p className="text-xs leading-relaxed">{t.sugestao_de_post}</p>
-                          <Link
-                            href="/carrossel"
-                            className="mt-1.5 inline-block text-[11px] text-[var(--accent)] hover:underline"
-                          >
-                            virar carrossel →
-                          </Link>
                         </div>
                       </div>
                     </li>

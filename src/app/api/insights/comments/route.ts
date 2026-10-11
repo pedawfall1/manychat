@@ -3,7 +3,7 @@ import { db } from "@/lib/supabase";
 import { getAccount } from "@/lib/repo";
 import { withApi } from "@/lib/api";
 import { listComments } from "@/lib/meta/client";
-import { mineComments } from "@/lib/carousel/mine";
+import { mineComments } from "@/lib/ai/mine";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
